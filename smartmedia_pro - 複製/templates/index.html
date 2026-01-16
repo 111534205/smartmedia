@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SmartMedia - 影音推薦</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/app.js" defer></script>
+</head>
+<body>
+
+<header>
+  <h1 onclick="location.href='/'" style="cursor:pointer; color:#E50914;">SmartMedia</h1>
+  <form action="/search">
+    <input name="q" placeholder="搜尋影片..." value="{{ search or '' }}">
+    <button type="submit">搜尋</button>
+  </form>
+  {% if session.admin_logged_in %}
+    <a href="/admin" style="color:white; margin-left:20px;">進入後台</a>
+  {% else %}
+    <a href="/admin/login" style="color:white; margin-left:20px;">管理員登入</a>
+  {% endif %}
+</header>
+
+<main>
+{% for category, videos in data.items() %}
+<section class="category-section">
+    <h2 class="category-title">{{ category }}</h2>
+    <div class="row">
+        <button class="nav left">‹</button>
+        <div class="list">
+            {% for v in videos %}
+            <div class="card" onclick="play('{{v.url}}','{{v.title}}','{{v.channel}}')">
+                <div class="img-container">
+                    <img src="{{v.thumb}}" alt="{{v.title}}">
+                </div>
+                <div class="info">
+                    <div class="v-title">{{ v.title }}</div>
+                    <div class="v-channel">{{ v.channel }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="nav right">›</button>
+    </div>
+</section>
+{% endfor %}
+</main>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+import os
+
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY", "AIzaSyCm-y_HjKoP1NNNbD0Bbk4LFrQv09RaK7M")
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "12345"

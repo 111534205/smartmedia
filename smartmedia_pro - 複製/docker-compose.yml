@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  smartmedia:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      YOUTUBE_API_KEY: "PUT_YOUR_YOUTUBE_API_KEY"
+      SECRET_KEY: "CHANGE_ME_IN_PRODUCTION"
+      ADMIN_USER: "admin"
+      ADMIN_PASS: "12345"
+      ADMIN_TOKEN_TTL_SECONDS: "7200"
+    volumes:
+      - ./data:/app/data

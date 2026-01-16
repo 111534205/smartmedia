@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>搜尋結果 - {{ query }}</title>
+    <style>
+        body { background: #141414; color: white; font-family: sans-serif; padding: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: #181818; border-radius: 4px; overflow: hidden; transition: 0.3s; }
+        .card:hover { transform: scale(1.05); }
+        .card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .card-body { padding: 10px; }
+        .title { font-size: 14px; font-weight: bold; margin-bottom: 5px; height: 40px; overflow: hidden; }
+        a { text-decoration: none; color: white; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #E50914; }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-link">← 返回首頁</a>
+    <h2>「{{ query }}」的搜尋結果</h2>
+    
+    <div class="grid">
+        {% for video in results %}
+        <div class="card">
+            <a href="{{ video.url }}" target="_blank" onclick="logClick('{{ video.title }}', 'Search')">
+                <img src="{{ video.thumb }}" alt="thumbnail">
+                <div class="card-body">
+                    <div class="title">{{ video.title }}</div>
+                    <div style="font-size: 12px; color: #aaa;">{{ video.channel }}</div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function logClick(title, category) {
+            fetch('/click', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ title: title, category: category })
+            });
+        }
+    </script>
+</body>
+</html>
